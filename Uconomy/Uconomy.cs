@@ -31,6 +31,9 @@ namespace fr34kyn01535.Uconomy
             MessageColor = Configuration.Instance.MessageColor;
             Database = new DatabaseManager();
         }
+
+
+
         private void Events_OnPlayerDisconnected(UnturnedPlayer player)
         {
             if (Cache.ContainsKey(player.CSteamID.m_SteamID))
@@ -76,6 +79,8 @@ namespace fr34kyn01535.Uconomy
         internal void BalanceUpdated(string steamId, decimal amt)
         {
             if (OnBalanceUpdate == null) return;
+
+
             var player = UnturnedPlayer.FromCSteamID(new CSteamID(Convert.ToUInt64(steamId)));
             OnBalanceUpdate(player, amt);
         }
@@ -89,7 +94,7 @@ namespace fr34kyn01535.Uconomy
 
         private void Events_OnPlayerConnected(UnturnedPlayer player)
         {
-            EffectManager.sendUIEffect(43005,1,player.CSteamID,true,"123","123");
+            
 
             uint user_id = PlayerLibrary.PlayerLibrary.GetPlayerIndexByCSteam(player.CSteamID.m_SteamID);
             Uconomys uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
@@ -101,6 +106,7 @@ namespace fr34kyn01535.Uconomy
             }
             Cache.Add(player.CSteamID.m_SteamID, uconomys.Id);
 
+            EffectManager.sendUIEffect(43005, 1, player.CSteamID, true, uconomys.balance.ToString(), Configuration.Instance.MoneySymbol);
             // Ensure that the account exists within the database.
             // Database.CheckSetupAccount(player.CSteamID);
         }

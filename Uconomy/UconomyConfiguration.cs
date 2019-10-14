@@ -14,8 +14,8 @@ namespace fr34kyn01535.Uconomy
         public void LoadDefaults()
         {
             InitialBalance = 30;
-            MoneySymbol = "$";
-            MoneyName = "Credits";
+            MoneySymbol = "‡";
+            MoneyName = "金币";
             MessageColor = "blue";
         }
     }
