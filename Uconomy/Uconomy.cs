@@ -25,7 +25,14 @@ namespace fr34kyn01535.Uconomy
         protected override void Load()
         {
             Instance = this;
-            Db = PlayerLibrary.PlayerLibrary.Db;
+            Db = PlayerLibrary.DbMySQL.Db;
+
+            Configuration.Instance.DatabaseAddress = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabaseAddress;
+            Configuration.Instance.DatabaseName = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabaseName;
+            Configuration.Instance.DatabaseUsername = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabaseUsername;
+            Configuration.Instance.DatabasePassword = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabasePassword;
+            Configuration.Instance.DatabasePort = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabasePort;
+
             U.Events.OnPlayerConnected += Events_OnPlayerConnected;
             U.Events.OnPlayerDisconnected += Events_OnPlayerDisconnected;
             MessageColor = Configuration.Instance.MessageColor;

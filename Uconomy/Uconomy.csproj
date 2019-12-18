@@ -36,44 +36,34 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>F:\SteamLibrary\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>F:\SteamLibrary\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="I18N">
-      <HintPath>..\..\Libraries\I18N.dll</HintPath>
-    </Reference>
-    <Reference Include="I18N.West">
-      <HintPath>..\..\Libraries\I18N.West.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\Libraries\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="PlayerLibrary">
-      <HintPath>D:\开发备份\C#\Player\Player\bin\Release\PlayerLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Rocket.API, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PlayerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Rocket.API.dll</HintPath>
+      <HintPath>D:\开发备份\C#\SQL系列\PlayerLibrary\PlayerLibrary\bin\Debug\PlayerLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Rocket.API">
+      <HintPath>D:\开发备份\C#\Lib\Rocket.API.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Rocket.Core">
-      <HintPath>lib\Rocket.Core.dll</HintPath>
+      <HintPath>D:\开发备份\C#\Lib\Rocket.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Rocket.Unturned, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Rocket.Unturned.dll</HintPath>
+    <Reference Include="Rocket.Unturned">
+      <HintPath>D:\开发备份\C#\Lib\Rocket.Unturned.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SqlSugar">
       <HintPath>F:\SteamLibrary\steamapps\common\Unturned\Servers\PEI\Rocket\Libraries\SqlSugar.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -93,14 +83,12 @@
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\开发备份\C#\Lib\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\开发备份\C#\Lib\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -112,16 +100,6 @@
     <Compile Include="UconomyConfiguration.cs" />
     <Compile Include="Uconomy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Lib\Assembly-CSharp-firstpass.dll" />
-    <Content Include="Lib\Assembly-CSharp.dll" />
-    <Content Include="Lib\PlayerLibrary.dll" />
-    <Content Include="Lib\Rocket.API.dll" />
-    <Content Include="Lib\Rocket.Core.dll" />
-    <Content Include="Lib\Rocket.Unturned.dll" />
-    <Content Include="Lib\UnityEngine.CoreModule.dll" />
-    <Content Include="Lib\UnityEngine.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

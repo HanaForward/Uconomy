@@ -58,14 +58,13 @@ namespace fr34kyn01535.Uconomy
         public decimal IncreaseBalance(string id, decimal increaseBy)
         {
             ulong steamid = Convert.ToUInt64(id);
-            decimal output = 0;
             uint Single = Uconomy.Instance.GetSingle(steamid);
             Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().InSingle(Single);
             uconomys.balance += increaseBy;
-            Uconomy.Db.Updateable(uconomys);
+            Uconomy.Db.Updateable(uconomys).ExecuteCommand();
             Uconomy.Instance.BalanceUpdated(id, increaseBy);
             EffectManager.sendUIEffect(43005, 1, (CSteamID)steamid, true, uconomys.balance.ToString());
-            return output;
+            return uconomys.balance;
         }
     }
 }
