@@ -1,7 +1,9 @@
 ﻿using fr34kyn01535.Uconomy.Model;
-using SDG.Unturned;
-using Steamworks;
+using MySql.Data.MySqlClient;
+using Rocket.Core.Logging;
+using SqlSugar;
 using System;
+using System.Collections.Generic;
 
 namespace fr34kyn01535.Uconomy
 {
@@ -16,9 +18,9 @@ namespace fr34kyn01535.Uconomy
         {
 
 
-            if (PlayerLibrary.PlayerLibrary.CheckTable("Uconomys"))
+            if (PlayerLibrary.PlayerLibrary.CheckTable(Uconomy.Instance.Configuration.Instance.TableName))
             {
-                PlayerLibrary.PlayerLibrary.CreateTables("CREATE TABLE `Uconomys` ( `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, `player` int(10) UNSIGNED NOT NULL, `balance` decimal(15, 2) UNSIGNED DEFAULT NULL, PRIMARY KEY (`id`), KEY `uconomys_player` USING HASH (`player`), CONSTRAINT `uconomys_player` FOREIGN KEY (`player`) REFERENCES `Players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB CHARSET = utf8;");
+                PlayerLibrary.PlayerLibrary.CreateTables("CREATE TABLE `" + Uconomy.Instance.Configuration.Instance.TableName + "` ( `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, `player` int(10) UNSIGNED NOT NULL, `balance` decimal(15, 2) UNSIGNED DEFAULT NULL, PRIMARY KEY (`id`), KEY `uconomys_player` USING HASH (`player`), CONSTRAINT `uconomys_player` FOREIGN KEY (`player`) REFERENCES `Players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB CHARSET = utf8;");
             }
 
             /*
@@ -63,8 +65,49 @@ namespace fr34kyn01535.Uconomy
             uconomys.balance += increaseBy;
             Uconomy.Db.Updateable(uconomys).ExecuteCommand();
             Uconomy.Instance.BalanceUpdated(id, increaseBy);
-            EffectManager.sendUIEffect(43005, 1, (CSteamID)steamid, true, uconomys.balance.ToString());
             return uconomys.balance;
+        }
+
+        public MySqlConnection CreateConnection()
+        {
+            MySqlConnection mySqlConnection = null;
+            try
+            {
+                if (Uconomy.Instance.Configuration.Instance.DatabasePort == 0)
+                {
+                    Uconomy.Instance.Configuration.Instance.DatabasePort = 3306;
+                }
+                mySqlConnection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};Allow User Variables=True;", Uconomy.Instance.Configuration.Instance.DatabaseAddress, Uconomy.Instance.Configuration.Instance.DatabaseName, Uconomy.Instance.Configuration.Instance.DatabaseUsername, Uconomy.Instance.Configuration.Instance.DatabasePassword, Uconomy.Instance.Configuration.Instance.DatabasePort));
+            }
+            catch (Exception exception)
+            {
+                Logger.LogError(exception.Message);
+            }
+            return mySqlConnection;
+        }
+
+
+        public ushort GetRank(ulong Steamid)
+        {
+            MySqlConnection mySqlConnection = CreateConnection();
+            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+            uint user_id = PlayerLibrary.PlayerLibrary.GetPlayerIndexByCSteam(Steamid);
+#if DEBUG
+            Logger.Log("user_id : " + user_id);
+#endif
+            mySqlCommand.CommandText = string.Concat("SET @rank :=0;SELECT rank FROM ( SELECT *,(@rank:=@rank + 1) AS rank FROM " + Uconomy.Instance.Configuration.Instance.TableName + " ORDER BY balance DESC LIMIT 999 ) AS Rank WHERE Rank.player = " + user_id + ";");
+            mySqlConnection.Open();
+            object obj = mySqlCommand.ExecuteScalar();
+
+            mySqlConnection.Close();
+            if (obj == null)
+            {
+                return 999;
+            }
+            else
+            {
+                return Convert.ToUInt16(obj);
+            }
         }
     }
 }

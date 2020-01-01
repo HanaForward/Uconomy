@@ -44,9 +44,12 @@
       <HintPath>F:\SteamLibrary\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PlayerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\开发备份\C#\SQL系列\PlayerLibrary\PlayerLibrary\bin\Debug\PlayerLibrary.dll</HintPath>
+    <Reference Include="MySql.Data">
+      <HintPath>D:\开发备份\C#\Lib\MySql.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PlayerLibrary">
+      <HintPath>D:\开发备份\C#\SQL系列\PlayerLibrary\PlayerLibrary\bin\Release\PlayerLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Rocket.API">

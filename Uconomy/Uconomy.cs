@@ -3,7 +3,6 @@ using Rocket.API.Collections;
 using Rocket.Core.Plugins;
 using Rocket.Unturned;
 using Rocket.Unturned.Player;
-using SDG.Unturned;
 using SqlSugar;
 using Steamworks;
 using System;
@@ -26,6 +25,7 @@ namespace fr34kyn01535.Uconomy
         {
             Instance = this;
             Db = PlayerLibrary.DbMySQL.Db;
+            Database = new DatabaseManager();
 
             Configuration.Instance.DatabaseAddress = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabaseAddress;
             Configuration.Instance.DatabaseName = PlayerLibrary.PlayerLibrary.Instance.Configuration.Instance.DatabaseName;
@@ -36,7 +36,7 @@ namespace fr34kyn01535.Uconomy
             U.Events.OnPlayerConnected += Events_OnPlayerConnected;
             U.Events.OnPlayerDisconnected += Events_OnPlayerDisconnected;
             MessageColor = Configuration.Instance.MessageColor;
-            Database = new DatabaseManager();
+          
         }
 
 
@@ -101,8 +101,6 @@ namespace fr34kyn01535.Uconomy
 
         private void Events_OnPlayerConnected(UnturnedPlayer player)
         {
-            
-
             uint user_id = PlayerLibrary.PlayerLibrary.GetPlayerIndexByCSteam(player.CSteamID.m_SteamID);
             Uconomys uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
             if (uconomys == null)
@@ -113,7 +111,7 @@ namespace fr34kyn01535.Uconomy
             }
             Cache.Add(player.CSteamID.m_SteamID, uconomys.Id);
 
-            EffectManager.sendUIEffect(43005, 1, player.CSteamID, true, uconomys.balance.ToString(), Configuration.Instance.MoneySymbol);
+            //EffectManager.sendUIEffect(43005, 1, player.CSteamID, true, uconomys.balance.ToString(), Configuration.Instance.MoneySymbol);
             // Ensure that the account exists within the database.
             // Database.CheckSetupAccount(player.CSteamID);
         }
