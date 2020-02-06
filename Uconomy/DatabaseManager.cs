@@ -37,17 +37,19 @@ namespace fr34kyn01535.Uconomy
         /// </summary>
         /// <param name="id">The Steam 64 ID of the account to retrieve the balance from.</param>
         /// <returns>The balance of the account.</returns>
+
         public decimal GetBalance(string id)
         {
             ulong steamid = Convert.ToUInt64(id);
-            decimal output = 0;
-            if (Uconomy.Cache.ContainsKey(steamid))
-            {
-                Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().InSingle(Uconomy.Cache[steamid]);
-                Uconomy.Instance.OnBalanceChecked(id, output);
-                output = uconomys.balance;
-            }
-            return output;
+            return GetBalance(steamid);
+        }
+
+        public decimal GetBalance(ulong steamid)
+        {
+            uint Single = Uconomy.Instance.GetSingle(steamid);
+            Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().InSingle(Single);
+            Uconomy.Instance.OnBalanceChecked(steamid.ToString(), uconomys.balance);
+            return uconomys.balance;
         }
 
 
@@ -60,13 +62,20 @@ namespace fr34kyn01535.Uconomy
         public decimal IncreaseBalance(string id, decimal increaseBy)
         {
             ulong steamid = Convert.ToUInt64(id);
+            return IncreaseBalance(steamid, increaseBy);
+        }
+
+        public decimal IncreaseBalance(ulong steamid, decimal increaseBy)
+        {
             uint Single = Uconomy.Instance.GetSingle(steamid);
             Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().InSingle(Single);
             uconomys.balance += increaseBy;
             Uconomy.Db.Updateable(uconomys).ExecuteCommand();
-            Uconomy.Instance.BalanceUpdated(id, increaseBy);
+            Uconomy.Instance.BalanceUpdated(steamid.ToString(), increaseBy);
             return uconomys.balance;
         }
+
+
 
         public MySqlConnection CreateConnection()
         {

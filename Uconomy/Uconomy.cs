@@ -117,9 +117,9 @@ namespace fr34kyn01535.Uconomy
         }
         public uint GetSingle(ulong steamid)
         {
-            if (Cache.ContainsKey(steamid))
+            if (Cache.TryGetValue(steamid,out uint single))
             {
-                return Cache[steamid];
+                return single;
             }
             else
             {
