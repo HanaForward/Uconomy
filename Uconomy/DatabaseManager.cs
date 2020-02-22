@@ -65,6 +65,16 @@ namespace fr34kyn01535.Uconomy
             return IncreaseBalance(steamid, increaseBy);
         }
 
+
+        public decimal IncreaseBalance(uint Player_Id, decimal increaseBy)
+        {
+            Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().Where(it => it.player == Player_Id).First();
+            uconomys.balance += increaseBy;
+            Uconomy.Db.Updateable(uconomys).ExecuteCommand();
+            return uconomys.balance;
+        }
+
+
         public decimal IncreaseBalance(ulong steamid, decimal increaseBy)
         {
             uint Single = Uconomy.Instance.GetSingle(steamid);

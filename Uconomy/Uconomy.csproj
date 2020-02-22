@@ -45,8 +45,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>D:\开发备份\C#\Lib\MySql.Data.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Libraries\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="PlayerLibrary">
       <HintPath>D:\开发备份\C#\SQL系列\PlayerLibrary\PlayerLibrary\bin\Release\PlayerLibrary.dll</HintPath>

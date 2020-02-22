@@ -36,7 +36,6 @@ namespace fr34kyn01535.Uconomy
             U.Events.OnPlayerConnected += Events_OnPlayerConnected;
             U.Events.OnPlayerDisconnected += Events_OnPlayerDisconnected;
             MessageColor = Configuration.Instance.MessageColor;
-          
         }
 
 
