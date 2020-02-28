@@ -105,14 +105,9 @@ namespace fr34kyn01535.Uconomy
             if (uconomys == null)
             {
                 uconomys = new Uconomys(user_id);
-                Db.Insertable(uconomys).ExecuteCommand();
-                uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
+                uconomys = Db.Insertable(uconomys).ExecuteReturnEntity();
             }
             Cache.Add(player.CSteamID.m_SteamID, uconomys.Id);
-
-            //EffectManager.sendUIEffect(43005, 1, player.CSteamID, true, uconomys.balance.ToString(), Configuration.Instance.MoneySymbol);
-            // Ensure that the account exists within the database.
-            // Database.CheckSetupAccount(player.CSteamID);
         }
         public uint GetSingle(ulong steamid)
         {
@@ -124,8 +119,18 @@ namespace fr34kyn01535.Uconomy
             {
                 uint user_id = PlayerLibrary.PlayerLibrary.GetPlayerIndexByCSteam(steamid);
                 Uconomys uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
-                Cache.Add(steamid, uconomys.Id);
-                return uconomys.Id;
+                if (uconomys != null)
+                {
+                    Cache.Add(steamid, uconomys.Id);
+                    return uconomys.Id;
+                }
+                else
+                {
+                    uconomys = new Uconomys(user_id);
+                    uconomys = Db.Insertable(uconomys).ExecuteReturnEntity();
+                    Cache.Add(steamid, uconomys.Id);
+                    return uconomys.Id;
+                }
             }
         }
     }
