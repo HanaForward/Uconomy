@@ -116,7 +116,7 @@ namespace fr34kyn01535.Uconomy
         }
         public uint GetSingle(ulong steamid)
         {
-            if (Cache.TryGetValue(steamid,out uint single))
+            if (Cache.TryGetValue(steamid, out uint single))
             {
                 return single;
             }
@@ -124,6 +124,7 @@ namespace fr34kyn01535.Uconomy
             {
                 uint user_id = PlayerLibrary.PlayerLibrary.GetPlayerIndexByCSteam(steamid);
                 Uconomys uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
+                Cache.Add(steamid, uconomys.Id);
                 return uconomys.Id;
             }
         }
