@@ -6,17 +6,13 @@ namespace fr34kyn01535.Uconomy.Model
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public uint Id { get; set; }
-
         public uint player { get; set; }
-        
         public decimal balance { get; set; }
-
         public Uconomys() { }
-
-
-        public Uconomys(uint player) {
+        public Uconomys(uint player) 
+        {
             this.player = player;
-
+            balance = Uconomy.Instance.Configuration.Instance.InitialBalance;
         }
     }
 }
