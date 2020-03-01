@@ -69,7 +69,13 @@ namespace fr34kyn01535.Uconomy
         public decimal IncreaseBalance(uint Player_Id, decimal increaseBy)
         {
             Uconomys uconomys = Uconomy.Db.Queryable<Uconomys>().Where(it => it.player == Player_Id).First();
-            uconomys.balance += increaseBy;
+            decimal old_balance = uconomys.balance;
+            if (increaseBy < 0)
+                uconomys.balance = uconomys.balance <= increaseBy ? 0 : uconomys.balance - increaseBy;
+            else
+                uconomys.balance += increaseBy;
+            if (old_balance == uconomys.balance)
+                return uconomys.balance;
             Uconomy.Db.Updateable(uconomys).ExecuteCommand();
             return uconomys.balance;
         }
