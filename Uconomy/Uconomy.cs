@@ -63,18 +63,18 @@ namespace fr34kyn01535.Uconomy
         public override TranslationList DefaultTranslations =>
             new TranslationList
             {
-                {"command_balance_show", "Your current balance is: {0} {1} {2}"},
-                {"command_balance_error_player_not_found", "Failed to find player!"},
-                {"command_balance_check_noPermissions", "Insufficent Permissions!"},
-                {"command_balance_show_otherPlayer", "{0}'s current balance is: {0} {1} {2}"},
-                {"command_pay_invalid", "Invalid arguments"},
-                {"command_pay_error_pay_self", "You cant pay yourself"},
-                {"command_pay_error_invalid_amount", "Invalid amount"},
-                {"command_pay_error_cant_afford", "Your balance does not allow this payment"},
-                {"command_pay_error_player_not_found", "Failed to find player"},
-                {"command_pay_private", "You paid {0} {1} {2}"},
-                {"command_pay_console", "You received a payment of {0} {1} "},
-                {"command_pay_other_private", "You received a payment of {0} {1} from {2}"}
+                {"command_balance_show", "你当前余额为: {0} {1} {2}"},
+                {"command_balance_error_player_not_found", "找不到玩家!"},
+                {"command_balance_check_noPermissions", "权限不够!"},
+                {"command_balance_show_otherPlayer", "{0} 的当前余额为: {0} {1} {2}"},
+                {"command_pay_invalid", "无效参数"},
+                {"command_pay_error_pay_self", "你不能付钱给自己"},
+                {"command_pay_error_invalid_amount", "无效的金额"},
+                {"command_pay_error_cant_afford", "没有足够的余额"},
+                {"command_pay_error_player_not_found", "找不到这个人"},
+                {"command_pay_private", "付款了 {0} {1} {2}"},
+                {"command_pay_console", "你收到付款 {0} {1} "},
+                {"command_pay_other_private", "你收到付款 {0} {1} 来自 {2}"}
             };
 
         internal void HasBeenPayed(UnturnedPlayer sender, string receiver, decimal amt)
@@ -85,8 +85,6 @@ namespace fr34kyn01535.Uconomy
         internal void BalanceUpdated(string steamId, decimal amt)
         {
             if (OnBalanceUpdate == null) return;
-
-
             var player = UnturnedPlayer.FromCSteamID(new CSteamID(Convert.ToUInt64(steamId)));
             OnBalanceUpdate(player, amt);
         }
@@ -107,7 +105,7 @@ namespace fr34kyn01535.Uconomy
                 uconomys = new Uconomys(user_id);
                 uconomys = Db.Insertable(uconomys).ExecuteReturnEntity();
             }
-            Cache.Add(player.CSteamID.m_SteamID, uconomys.Id);
+            Cache.Add(player.CSteamID.m_SteamID, uconomys.player);
         }
         public uint GetSingle(ulong steamid)
         {
@@ -121,15 +119,15 @@ namespace fr34kyn01535.Uconomy
                 Uconomys uconomys = Db.Queryable<Uconomys>().Where(it => it.player == user_id).First();
                 if (uconomys != null)
                 {
-                    Cache.Add(steamid, uconomys.Id);
-                    return uconomys.Id;
+                    Cache.Add(steamid, uconomys.player);
+                    return uconomys.player;
                 }
                 else
                 {
                     uconomys = new Uconomys(user_id);
                     uconomys = Db.Insertable(uconomys).ExecuteReturnEntity();
-                    Cache.Add(steamid, uconomys.Id);
-                    return uconomys.Id;
+                    Cache.Add(steamid, uconomys.player);
+                    return uconomys.player;
                 }
             }
         }

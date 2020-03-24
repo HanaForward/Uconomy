@@ -16,20 +16,10 @@ namespace fr34kyn01535.Uconomy
 
         private void CheckSchema()
         {
-
-
             if (PlayerLibrary.PlayerLibrary.CheckTable(Uconomy.Instance.Configuration.Instance.TableName))
             {
                 PlayerLibrary.PlayerLibrary.CreateTables("CREATE TABLE `" + Uconomy.Instance.Configuration.Instance.TableName + "` ( `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, `player` int(10) UNSIGNED NOT NULL, `balance` decimal(15, 2) UNSIGNED DEFAULT NULL, PRIMARY KEY (`id`), KEY `uconomys_player` USING HASH (`player`), CONSTRAINT `uconomys_player` FOREIGN KEY (`player`) REFERENCES `Players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB CHARSET = utf8;");
             }
-
-            /*
-            object parameters = Uconomy.Db.Ado.GetScalar("show tables like 'Uconomys';");
-            if (parameters == null)
-            {
-                Uconomy.Db.Ado.GetScalar("CREATE TABLE `Uconomys` ( `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, `player` int(10) UNSIGNED NOT NULL, `balance` decimal(15, 2) UNSIGNED DEFAULT NULL, PRIMARY KEY (`id`), KEY `uconomys_player` USING HASH (`player`), CONSTRAINT `uconomys_player` FOREIGN KEY (`player`) REFERENCES `Players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB CHARSET = utf8;");
-            }
-            */
         }
 
         /// <summary>
@@ -90,8 +80,6 @@ namespace fr34kyn01535.Uconomy
             Uconomy.Instance.BalanceUpdated(steamid.ToString(), increaseBy);
             return uconomys.balance;
         }
-
-
 
         public MySqlConnection CreateConnection()
         {
